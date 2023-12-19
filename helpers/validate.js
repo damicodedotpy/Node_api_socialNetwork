@@ -9,9 +9,6 @@ const validate = (params) => {
     // Validar nombre
     let name = !validator.isEmpty(params.name) && validator.isLength(params.name, {min: 3, max: 50}) && validator.isAlpha(params.name, "es-ES") ? params.name : false;
 
-    // Validar apellidos
-    let surname = !validator.isEmpty(params.surname) && validator.isLength(params.surname, {min: 3, max: 50}) && validator.isAlpha(params.surname, "es-ES") ? params.surname : false;   
-
     // Validar nick
     let nick = !validator.isEmpty(params.nick) && validator.isLength(params.nick, {min: 2, max: 50}) ? params.nick : false;
 
@@ -21,14 +18,25 @@ const validate = (params) => {
     // Validar password
     let password = !validator.isEmpty(params.password) && validator.isLength(params.password, {min: 4, max: 50}) ? params.password : false;
 
+    // Validar apellido
+    if(params.surname) {
+        // Verificar que el apellido no este vacio, que tenga entre 3 y 50 caracteres y que sea alfanumerico
+        let surname = !validator.isEmpty(params.surname) && validator.isLength(params.surname, {min: 3, max: 50}) && validator.isAlpha(params.surname, "es-ES") ? params.surname : false;   
+        
+        // Lanzar error si el apellido no es valido
+        if(!surname) throw new Error("SURNAME_ERROR");
+    }
+
     // Validar bio
-    let bio = !validator.isEmpty(params.bio) && validator.isLength(params.bio, {min: undefined, max: 255}) ? params.bio : false;
-    
+    if(params.bio) {
+        let bio = !validator.isEmpty(params.bio) && validator.isLength(params.bio, {min: undefined, max: 255}) ? params.bio : false;
+
+        // Lanzar error si la bio no es valida
+        if(!bio) throw new Error("BIO_ERROR");
+    }
+
     // Lanzar error si el nombre no es valido
     if(!name) throw new Error("NAME_ERROR");
-
-    // Lanzar error si el apellido no es valido
-    if(!surname) throw new Error("SURNAME_ERROR");
 
     // Lanzar error si el nick no es valido
     if(!nick) throw new Error("NICK_ERROR");
@@ -38,9 +46,6 @@ const validate = (params) => {
 
     // Lanzar error si el password no es valido
     if(!password) throw new Error("PASSWORD_ERROR");
-
-    // Lanzar error si la bio no es valida
-    if(!bio) throw new Error("BIO_ERROR");
 
     console.log("Validacion correcta");
 }

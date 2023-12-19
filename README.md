@@ -7,4 +7,8 @@ Instructions:
     ROUTE_PREFIX_FOLLOW="/follow"
     ROUTE_PREFIX_PUBLICATION="/publication"
 3. Especificar una secret key dentro de una env variable llamada: SECRET_KEY
+4. Para registrar un nuevo usuario los campos obligatorios
+a mandar son: name, email, password, nick.
+5. Se debe mandar token JWT por headers del request bajo
+el nombre 'authorization'.
 
